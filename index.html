@@ -10,70 +10,63 @@
 <body>
     <header>
         <nav>
-            <div class="burger-menu" id="burger-menu">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-            </div>
-            <div class="nav-content">
-                <ul>
-                    <li><a href="#" data-page="assignment-description">Assignment Description</a></li>
-                    <li><a href="#" data-page="select-dog">Select dog</a></li>
-                    <li><a href="#" data-page="how-it-works">How does it work</a></li>
-                </ul>
-            </div>
+            <ul>
+                <li><a href="#" data-page="assignment-description">Assignment Description</a></li>
+                <li><a href="#" data-page="select-dog">Select dog</a></li>
+                <li><a href="#" data-page="how-it-works">How does it work</a></li>
+            </ul>
         </nav>
     </header>
     <main>
         <section id="assignment-description" class="page active">
-        <h1>Dog Api | Assignment</h1>
-        <p>This is a project for an assignment given by SDE - SOP.</p>
-        <h3>Tech and languages</h3>
-        <ul>
-            <li>HTML</li>
-            <li>Bootstrap</li>
-            <li>AJAX</li>
-            <li>JSON</li>
-            <li>JavaScript</li>
-            <li>C# or PHP</li>
-        </ul>
-        <h3>Version Control Tool</h3>
-        <ul>
-            <li>Repos, GitHub or Bitbucket</li>
-        </ul>
-        <h3>Assignment Description</h3>
-        <p>
-            Build a web application using the
-            <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a> with the
-            following requirements:
-        </p>
-        <ul>
-            <li>Fetch data from the Dog API</li>
-            <li>Display the retrieved data</li>
-            <li>Implement filtering functionality</li>
-        </ul>
-        <h3>Requirements for functionality</h3>
-        <ul>
-            <li>
-                Users must be able to select any dog breed and view available images
-                of the selected breed
-            </li>
-            <li>
-                The web application must be responsive to ensure proper functionality
-                on both desktop and mobile devices
-            </li>
-        </ul>
-        <h3>Submission Requirements</h3>
-        <p>Submit a ZIP file containing:</p>
-        <ul>
-            <li>Screenshot of Git commit history</li>
-            <li>Product documentation (PDF) including:
-                <ul>
-                    <li>Developer name, date, and project name</li>
-                    <li>Brief technical description with justification of chosen technologies</li>
-                </ul>
-            </li>
-        </ul>
+            <h1>Dog Api | Assignment</h1>
+            <p>This is a project for an assignment given by SDE - SOP.</p>
+            <h3>Tech and languages</h3>
+            <ul>
+                <li>HTML</li>
+                <li>Bootstrap</li>
+                <li>AJAX</li>
+                <li>JSON</li>
+                <li>JavaScript</li>
+                <li>C# or PHP</li>
+            </ul>
+            <h3>Version Control Tool</h3>
+            <ul>
+                <li>Repos, GitHub or Bitbucket</li>
+            </ul>
+            <h3>Assignment Description</h3>
+            <p>
+                Build a web application using the
+                <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a> with the
+                following requirements:
+            </p>
+            <ul>
+                <li>Fetch data from the Dog API</li>
+                <li>Display the retrieved data</li>
+                <li>Implement filtering functionality</li>
+            </ul>
+            <h3>Requirements for functionality</h3>
+            <ul>
+                <li>
+                    Users must be able to select any dog breed and view available images
+                    of the selected breed
+                </li>
+                <li>
+                    The web application must be responsive to ensure proper functionality
+                    on both desktop and mobile devices
+                </li>
+            </ul>
+            <h3>Submission Requirements</h3>
+            <p>Submit a ZIP file containing:</p>
+            <ul>
+                <li>Screenshot of Git commit history</li>
+                <li>Product documentation (PDF) including:
+                    <ul>
+                        <li>Developer name, date, and project name</li>
+                        <li>Brief technical description with justification of chosen technologies</li>
+                    </ul>
+                </li>
+            </ul>
         </section>
         <section id="select-dog" class="page">
             <h1>Select a Dog Breed</h1>
@@ -88,50 +81,115 @@
             <h1>How Does It Work</h1>
             <div class="documentation">
                 <h3>Technical Implementation</h3>
-                <ul>
-                    <li>Uses the Dog CEO API to fetch dog breeds and images</li>
-                    <li>Implements client-side caching for better performance</li>
-                    <li>Utilizes AJAX for seamless data fetching</li>
-                    <li>Responsive design for all devices</li>
-                </ul>
+
+                <h4>1. API Integration</h4>
+                <pre><code class="javascript">
+        class DogAPI {
+            static async getAllBreeds() {
+                const cached = Cache.get('allBreeds');
+                if (cached) return cached;
+        
+                const response = await fetch(`${CONFIG.API_URL}${CONFIG.ENDPOINTS.ALL_BREEDS}`);
+                const data = await response.json();
+                Cache.set('allBreeds', data);
+                return data;
+            }
+        }
+                </code></pre>
+                <div class="code-explanation">
+                    <p>The DogAPI class handles all API communications using:</p>
+                    <ul>
+                        <li>Async/await for clean promise handling</li>
+                        <li>Fetch API for AJAX requests</li>
+                        <li>Cache checking before making API calls</li>
+                        <li>Configuration-based endpoint management</li>
+                    </ul>
+                </div>
+
+                <h4>2. Caching System</h4>
+                <pre><code class="javascript">
+        class Cache {
+            static set(key, data) {
+                const item = {
+                    data,
+                    timestamp: new Date().getTime()
+                };
+                localStorage.setItem(key, JSON.stringify(item));
+            }
+        
+            static get(key) {
+                const item = localStorage.getItem(key);
+                if (!item) return null;
+                const parsedItem = JSON.parse(item);
+                const now = new Date().getTime();
+                if (now - parsedItem.timestamp > CONFIG.CACHE_TIME) {
+                    localStorage.removeItem(key);
+                    return null;
+                }
+                return parsedItem.data;
+            }
+        }
+                </code></pre>
+                <div class="code-explanation">
+                    <p>The Cache system implements:</p>
+                    <ul>
+                        <li>localStorage for persistent data storage</li>
+                        <li>Timestamp-based cache invalidation</li>
+                        <li>Automatic cleanup of expired cache entries</li>
+                        <li>JSON serialization for complex data structures</li>
+                    </ul>
+                </div>
+
+                <h4>3. UI Management</h4>
+                <pre><code class="javascript">
+        class UI {
+            static displayBreedList(breeds) {
+                const select = document.getElementById('breed-select');
+                Object.keys(breeds).forEach(breed => {
+                    const option = document.createElement('option');
+                    option.value = breed;
+                    option.textContent = breed.charAt(0).toUpperCase() + 
+                                       breed.slice(1);
+                    select.appendChild(option);
+                });
+            }
+        }
+                </code></pre>
+                <div class="code-explanation">
+                    <p>The UI class manages DOM manipulation with:</p>
+                    <ul>
+                        <li>Dynamic element creation and updates</li>
+                        <li>Text content formatting (capitalization)</li>
+                        <li>Event-driven updates</li>
+                        <li>Centralized DOM manipulation logic</li>
+                    </ul>
+                </div>
+                <div class="features-list">
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Asynchronous Operations:</strong> Uses async/await for API calls</li>
+                        <li><strong>Cache Management:</strong> Implements localStorage with timestamp validation</li>
+                        <li><strong>Error Handling:</strong> Try-catch blocks for API operations</li>
+                        <li><strong>Modular Design:</strong> Separate classes for API, UI, and Cache operations</li>
+                        <li><strong>Event-Driven:</strong> Responds to user interactions and DOM events</li>
+                    </ul>
+                </div>
             </div>
         </section>
     </main>
     <footer>
-            <p>&copy; 2025 wisetown</p>
-        </footer>
-        <script>
-            document.getElementById('burger-menu').addEventListener('click', function() {
-                this.classList.toggle('change');
-                document.querySelector('.nav-content').classList.toggle('active');
-            });
-        
-            // Close menu when clicking outside
-            document.addEventListener('click', function(e) {
-                const burger = document.getElementById('burger-menu');
-                const nav = document.querySelector('.nav-content');
-                if (!burger.contains(e.target) && !nav.contains(e.target)) {
-                    burger.classList.remove('change');
-                    nav.classList.remove('active');
-                }
-            });
-        
-            // Close menu when clicking a link
-            document.querySelectorAll('.nav-content a').forEach(link => {
-                link.addEventListener('click', function() {
-                    document.getElementById('burger-menu').classList.remove('change');
-                    document.querySelector('.nav-content').classList.remove('active');
-                });
-            });
-        </script>
-        <script src="public/config.js"></script>
-        <script src="public/cache.js"></script>
-        <script src="public/api.js"></script>
-        <script src="public/ui.js"></script>
-        <script src="public/filters.js"></script>
-        <script src="public/navigation.js"></script>
-        <script src="public/app.js"></script>
+        <p>&copy; 2025 wisetown</p>
+    </footer>
 
-        
-    </body>
-    </html>
+    <script src="public/config.js"></script>
+    <script src="public/cache.js"></script>
+    <script src="public/api.js"></script>
+    <script src="public/ui.js"></script>
+    <script src="public/filters.js"></script>
+    <script src="public/navigation.js"></script>
+    <script src="public/app.js"></script>
+
+
+</body>
+
+</html>
