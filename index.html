@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link rel="stylesheet" href="public/stylesheet.css" />
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="burger-menu" id="burger-menu">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+            <div class="nav-content">
+                <ul>
+                    <li><a href="#" data-page="assignment-description">Assignment Description</a></li>
+                    <li><a href="#" data-page="select-dog">Select dog</a></li>
+                    <li><a href="#" data-page="how-it-works">How does it work</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="assignment-description" class="page active">
+        <h1>Dog Api | Assignment</h1>
+        <p>This is a project for an assignment given by SDE - SOP.</p>
+        <h3>Tech and languages</h3>
+        <ul>
+            <li>HTML</li>
+            <li>Bootstrap</li>
+            <li>AJAX</li>
+            <li>JSON</li>
+            <li>JavaScript</li>
+            <li>C# or PHP</li>
+        </ul>
+        <h3>Version Control Tool</h3>
+        <ul>
+            <li>Repos, GitHub or Bitbucket</li>
+        </ul>
+        <h3>Assignment Description</h3>
+        <p>
+            Build a web application using the
+            <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a> with the
+            following requirements:
+        </p>
+        <ul>
+            <li>Fetch data from the Dog API</li>
+            <li>Display the retrieved data</li>
+            <li>Implement filtering functionality</li>
+        </ul>
+        <h3>Requirements for functionality</h3>
+        <ul>
+            <li>
+                Users must be able to select any dog breed and view available images
+                of the selected breed
+            </li>
+            <li>
+                The web application must be responsive to ensure proper functionality
+                on both desktop and mobile devices
+            </li>
+        </ul>
+        <h3>Submission Requirements</h3>
+        <p>Submit a ZIP file containing:</p>
+        <ul>
+            <li>Screenshot of Git commit history</li>
+            <li>Product documentation (PDF) including:
+                <ul>
+                    <li>Developer name, date, and project name</li>
+                    <li>Brief technical description with justification of chosen technologies</li>
+                </ul>
+            </li>
+        </ul>
+        </section>
+        <section id="select-dog" class="page">
+            <h1>Select a Dog Breed</h1>
+            <div class="dog-container">
+                <select id="breed-select">
+                    <option value="">Select a breed</option>
+                </select>
+                <div id="dog-gallery"></div>
+            </div>
+        </section>
+        <section id="how-it-works" class="page">
+            <h1>How Does It Work</h1>
+            <div class="documentation">
+                <h3>Technical Implementation</h3>
+                <ul>
+                    <li>Uses the Dog CEO API to fetch dog breeds and images</li>
+                    <li>Implements client-side caching for better performance</li>
+                    <li>Utilizes AJAX for seamless data fetching</li>
+                    <li>Responsive design for all devices</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <footer>
+            <p>&copy; 2025 wisetown</p>
+        </footer>
+        <script>
+            document.getElementById('burger-menu').addEventListener('click', function() {
+                this.classList.toggle('change');
+                document.querySelector('.nav-content').classList.toggle('active');
+            });
+        
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                const burger = document.getElementById('burger-menu');
+                const nav = document.querySelector('.nav-content');
+                if (!burger.contains(e.target) && !nav.contains(e.target)) {
+                    burger.classList.remove('change');
+                    nav.classList.remove('active');
+                }
+            });
+        
+            // Close menu when clicking a link
+            document.querySelectorAll('.nav-content a').forEach(link => {
+                link.addEventListener('click', function() {
+                    document.getElementById('burger-menu').classList.remove('change');
+                    document.querySelector('.nav-content').classList.remove('active');
+                });
+            });
+        </script>
+        <script src="public/config.js"></script>
+        <script src="public/cache.js"></script>
+        <script src="public/api.js"></script>
+        <script src="public/ui.js"></script>
+        <script src="public/filters.js"></script>
+        <script src="public/navigation.js"></script>
+        <script src="public/app.js"></script>
+
+        
+    </body>
+    </html>
