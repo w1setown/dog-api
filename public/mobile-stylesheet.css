@@ -1,0 +1,86 @@
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    body {
+      padding: 12px;
+    }
+  
+    /* Hamburger Menu for Mobile */
+    .menu-toggle {
+      display: block;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  
+    .menu-toggle .bar {
+      width: 30px;
+      height: 3px;
+      background-color: var(--text-color);
+      margin: 6px 0;
+      transition: 0.4s;
+    }
+  
+    .menu-toggle.active .bar:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+  
+    .menu-toggle.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+  
+    .menu-toggle.active .bar:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+  
+    nav {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: var(--background-color);
+      transition: 0.3s;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    nav.active {
+      left: 0;
+    }
+  
+    nav ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+  
+    nav a {
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+    }
+  
+    main {
+      padding: 1.5rem;
+    }
+  
+    .slideshow-container {
+      height: 400px;
+    }
+  
+    .slide-btn {
+      padding: 0.75rem;
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+  
+    #breed-select {
+      max-width: 100%;
+    }
+  }
